@@ -20,6 +20,7 @@ class Base(Configuration):
         'django.contrib.staticfiles',
 
         'rest_framework',
+        'debug_toolbar',
 
         'courses'
     ]
@@ -32,6 +33,8 @@ class Base(Configuration):
         'django.contrib.auth.middleware.AuthenticationMiddleware',
         'django.contrib.messages.middleware.MessageMiddleware',
         'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+        'debug_toolbar.middleware.DebugToolbarMiddleware',
     ]
 
     ROOT_URLCONF = 'coursepro.urls'
@@ -80,6 +83,8 @@ class Base(Configuration):
     USE_TZ = True
 
     STATIC_URL = '/static/'
+
+    INTERNAL_IPS = ['127.0.0.1']
 
 
 class LocalSettings(Base):
