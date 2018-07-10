@@ -4,8 +4,11 @@ from . import serializers
 from rest_framework import permissions
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
-from django.shortcuts import get_object_or_404
-
+from django.shortcuts import get_object_or_404, redirect, render
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import UserCreationForm
+from .forms import RegistrationForm
+from django.http import HttpResponseRedirect
 
 class CourseListView(ListView):
     template_name = 'course_list.html'
@@ -38,3 +41,21 @@ class LessonListView(ListView):
 
 class LessonDetailView(DetailView):
     model = Lesson
+
+
+def register(request):
+    if request.method == 'POST':
+        form = RegistrationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('/accounts/login')
+        else:
+            return redirect('/')
+    else:
+        form = RegistrationForm()
+        args = {'form': form}
+    return render(request, 'registration/registration_form.html', args)
+
+
+def home(request):
+    return render(request, 'home.html')
