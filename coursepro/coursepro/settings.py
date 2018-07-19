@@ -12,6 +12,8 @@ class Base(Configuration):
     ALLOWED_HOSTS = []
 
     INSTALLED_APPS = [
+        'courses',
+
         'django.contrib.admin',
         'django.contrib.auth',
         'django.contrib.contenttypes',
@@ -20,8 +22,7 @@ class Base(Configuration):
         'django.contrib.staticfiles',
 
         'rest_framework',
-
-        'courses'
+        'debug_toolbar',
     ]
 
     MIDDLEWARE = [
@@ -32,6 +33,8 @@ class Base(Configuration):
         'django.contrib.auth.middleware.AuthenticationMiddleware',
         'django.contrib.messages.middleware.MessageMiddleware',
         'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+        'debug_toolbar.middleware.DebugToolbarMiddleware',
     ]
 
     ROOT_URLCONF = 'coursepro.urls'
@@ -39,7 +42,7 @@ class Base(Configuration):
     TEMPLATES = [
         {
             'BACKEND': 'django.template.backends.django.DjangoTemplates',
-            'DIRS': [],
+            'DIRS': ['./templates', ],
             'APP_DIRS': True,
             'OPTIONS': {
                 'context_processors': [
@@ -81,6 +84,11 @@ class Base(Configuration):
 
     STATIC_URL = '/static/'
 
+    INTERNAL_IPS = ['127.0.0.1']
+
+    LOGIN_REDIRECT_URL = '/'
+    LOGIN_URL = '/courses'
+
 
 class LocalSettings(Base):
     DEBUG = True
@@ -93,6 +101,7 @@ class LocalSettings(Base):
             'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
         }
     }
+    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 
 class ProductSettings(Base):
