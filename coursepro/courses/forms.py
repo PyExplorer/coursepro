@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 
 
 class RegistrationForm(UserCreationForm):
@@ -24,5 +24,6 @@ class RegistrationForm(UserCreationForm):
         return user
 
 
-
-
+class LoginForm(AuthenticationForm):
+    username = forms.CharField(label="Email", max_length=30)
+    password = forms.CharField(label="Пароль", widget=forms.PasswordInput)

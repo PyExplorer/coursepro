@@ -37,15 +37,19 @@
 
                     {% if user.is_authenticated %}
                         <li class="nav-item">
-                                <a class="nav-link" href="{% url 'logout'%}?next={{request.path}}"> User: {{ user.get_username }}</a>
+                                <a class="nav-link" href="{% url 'home' %}"> Пользователь: {{ user.get_username }}</a>
                         </li>
+                        <li class="nav-item">
+                                <a class="nav-link" href="{% url 'logout' %}"> Выйти</a>
+                        </li>
+
                     {% else %}
                         <li class="nav-item">
-                                <a class="nav-link" href="{% url 'login'%}?next={{request.path}}"> Log in</a>
+                                <a class="nav-link" href="{% url 'login' %}"> Войти</a>
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link" href="{% url 'register'%}"> Sign up</a>
+                            <a class="nav-link" href="{% url 'signup' %}"> Зарегистрироваться</a>
                         </li>
 
                     {% endif %}

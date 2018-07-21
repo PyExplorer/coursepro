@@ -3,6 +3,7 @@ import os
 from configurations import Configuration
 from configurations import values
 
+
 class Base(Configuration):
 
     SECRET_KEY = values.SecretValue()
@@ -86,8 +87,14 @@ class Base(Configuration):
 
     INTERNAL_IPS = ['127.0.0.1']
 
-    LOGIN_REDIRECT_URL = '/'
-    LOGIN_URL = '/courses'
+    LOGIN_REDIRECT_URL = '/home/'
+    LOGIN_URL = '/account/login'
+
+    AUTHENTICATION_BACKENDS = (
+        'coursepro.backends.EmailBackend',
+
+
+    )
 
 
 class LocalSettings(Base):

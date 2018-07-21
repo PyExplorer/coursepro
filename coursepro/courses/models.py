@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.db.models.signals import post_save
 
 
 class StrMixin(object):
@@ -13,7 +14,6 @@ class Course(StrMixin, models.Model):
     title = models.CharField(max_length=512)
     description = models.TextField()
     curator = models.ForeignKey('Teacher', on_delete='CASCADE', default=0)
-    price = models.IntegerField()
 
 
 class Lesson(StrMixin, models.Model):
@@ -29,11 +29,24 @@ class Teacher(StrMixin, models.Model):
     description = models.TextField()
 
 
+class UserProfile(models.Model):
+    user = models.OneToOneField(User, on_delete=True)
+    description = models.CharField(max_length=512, default='')
+    first_name = models.CharField(max_length=512, default='')
+    second_name = models.CharField(max_length=512, default='')
+    email = models.EmailField()
 
-        # зарегистрироваться
-    # залогиниться
-    # посмотреть список курсов
-    # зайти в курс
-    # посмотреть описание
-    # посмотреть список занятий
 
+def create_profile(sender, **kwargs):
+    if kwargs['created']:
+        user_profile = UserProfile.objects.create(user=kwargs['instance'])
+
+
+post_save.connect(create_profile, sender=User)
+
+# зарегистрироваться
+# залогиниться
+# посмотреть список курсов
+# зайти в курс
+# посмотреть описание
+# посмотреть список занятий

@@ -19,12 +19,11 @@ urlpatterns = [
 
     path('admin/', admin.site.urls),
 
-    path('accounts/', include('django.contrib.auth.urls')),
-    path('accounts/register/', course_views.register, name='register'),
+    path('account/', include('courses.account_urls')),
 
-    re_path(r'^api-auth/', include('rest_framework.urls')),
+    path(r'home/', course_views.home, name="home"),
+    path(r'', course_views.home_redirect, name="home_redirect"),
 
-    path(r'', course_views.home, name="home"),
 ]
 
 if settings.DEBUG:
